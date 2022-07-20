@@ -1,8 +1,10 @@
 package com.ironnet.mn.kafkatest;
 
+import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.clients.admin.AdminClientConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -12,6 +14,8 @@ import org.springframework.core.task.SimpleAsyncTaskExecutor;
 import org.springframework.core.task.TaskExecutor;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaAdmin;
+import org.springframework.kafka.support.converter.JsonMessageConverter;
+import org.springframework.kafka.support.converter.RecordMessageConverter;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -35,14 +39,23 @@ public class KafkaTestApplication {
 		};
 	}
 
+//	@Bean
+//	public KafkaAdmin admin() {
+//		Map<String, Object> configs = new HashMap<>();
+//		configs.put(AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9999");
+//		return new KafkaAdmin(configs);
+//	}
+    @Bean
+    public RecordMessageConverter converter() {
+        return new JsonMessageConverter();
+    }
+
 	@Bean
-	public KafkaAdmin admin() {
-		Map<String, Object> configs = new HashMap<>();
-		configs.put(AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9999");
-		return new KafkaAdmin(configs);
+	public NewTopic topic() {
+		return new NewTopic("topic1", 1, (short) 1);
 	}
 
-	@KafkaListener(id = "fooGroup", topics = "topic1")
+    @KafkaListener(id = "fooGroup", topics = "topic1")
 	public void listen(Foo2 foo) {
 		logger.info("Received: " + foo);
 		if (foo.getFoo().startsWith("fail")) {

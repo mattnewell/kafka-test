@@ -1,0 +1,7 @@
+spring:
+  kafka:
+    bootstrap-servers: b-1.mnmsktest.7z7k65.c7.kafka.us-east-2.amazonaws.com:9092,b-2.mnmsktest.7z7k65.c7.kafka.us-east-2.amazonaws.com:9092
+    producer:
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    consumer:
+      value-deserializer: org.apache.kafka.common.serialization.ByteArrayDeserializer
