@@ -52,7 +52,7 @@ public class KafkaTestApplication {
 
 	@Bean
 	public NewTopic topic() {
-		return new NewTopic("topic1", 1, (short) 1);
+		return new NewTopic("topic1", 1, (short) 2);
 	}
 
     @KafkaListener(id = "fooGroup", topics = "topic1")

@@ -1,6 +1,14 @@
+logging:
+  level:
+    root: INFO
+#ssl:
+#  truststore:
+#    location: /home/ubuntu/.jdks/openjdk-18.0.1.1/lib/security/cacerts
 spring:
   kafka:
-    bootstrap-servers: b-1.mnmsktest.7z7k65.c7.kafka.us-east-2.amazonaws.com:9092,b-2.mnmsktest.7z7k65.c7.kafka.us-east-2.amazonaws.com:9092
+    security:
+      protocol: SSL
+    bootstrap-servers: b-1.mnmsktest.7z7k65.c7.kafka.us-east-2.amazonaws.com:9094,b-2.mnmsktest.7z7k65.c7.kafka.us-east-2.amazonaws.com:9094
     producer:
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
     consumer:
